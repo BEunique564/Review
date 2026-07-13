@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Share your amazing dining experience at L'ENCORE Ahmedabad. Generate polished, professional, and human-written Google reviews that feel natural and trustworthy." />
+    <meta name="keywords" content="L'ENCORE Ahmedabad, restaurant reviews, Google reviews, dining experience, Ahmedabad restaurant, review generation, customer reviews" />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#020617" />
+    <meta property="og:title" content="Review L'ENCORE · AI Review Generation" />
+    <meta property="og:description" content="Generate polished, human-written reviews for your L'ENCORE dining experience. Share your feedback and help others discover great dining." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="L'ENCORE" />
+    <title>Review L'ENCORE · AI Review Generation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      body {
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      .fade-up {
+        animation: fadeUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(16px) scale(0.985);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+      .tag-pill {
+        transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+      }
+      .tag-pill:hover {
+        transform: translateY(-2px);
+      }
+      .tag-pill.active {
+        border-color: rgba(113, 63, 18, 0.9);
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 0 0 1px rgba(250, 204, 21, 0.28);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(250,204,21,0.12),_transparent_30%),linear-gradient(135deg,_#020617,_#111827_65%,_#0f172a)] text-slate-100">
+    <main class="flex min-h-screen items-center justify-center px-4 py-8 sm:px-6 lg:px-8">
+      <section class="w-full max-w-md rounded-[32px] border border-white/10 bg-slate-950/80 p-6 shadow-[0_25px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:p-8">
+        <header class="mb-6 rounded-2xl border border-amber-400/20 bg-gradient-to-r from-amber-500/10 via-white/5 to-amber-500/10 px-4 py-4 text-center">
+          <div class="mb-2 flex items-center justify-center gap-2">
+            <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-400/20 text-lg">🍽️</div>
+            <div>
+              <p class="text-[10px] uppercase tracking-[0.35em] text-amber-400">L'ENCORE</p>
+              <h1 class="text-base font-semibold text-white">Share Your Experience</h1>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400">Help others discover L'ENCORE by sharing your honest dining experience.</p>
+        </header>
+
+        <div id="screen-rating" class="space-y-6">
+          <div class="text-center">
+            <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-400/15 text-2xl">⭐</div>
+            <h2 class="text-2xl font-semibold text-white">Rate your visit</h2>
+            <p class="mt-2 text-sm text-slate-400">How was your experience at L'ENCORE? Share your feedback to help others.</p>
+          </div>
+
+          <div class="flex items-center justify-center gap-2 sm:gap-3" aria-label="Star rating">
+            <button class="text-4xl text-slate-700 transition hover:scale-110" data-star="1" onclick="handleStar(1)">★</button>
+            <button class="text-4xl text-slate-700 transition hover:scale-110" data-star="2" onclick="handleStar(2)">★</button>
+            <button class="text-4xl text-slate-700 transition hover:scale-110" data-star="3" onclick="handleStar(3)">★</button>
+            <button class="text-4xl text-slate-700 transition hover:scale-110" data-star="4" onclick="handleStar(4)">★</button>
+            <button class="text-4xl text-slate-700 transition hover:scale-110" data-star="5" onclick="handleStar(5)">★</button>
+          </div>
+
+          <p class="text-center text-sm text-slate-500">Select a rating to begin your review</p>
+        </div>
+
+        <div id="screen-negative" class="hidden fade-up space-y-4">
+          <div class="text-center">
+            <div class="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-rose-500/10 text-xl">💬</div>
+            <h2 class="text-xl font-semibold text-white">We'd love to hear from you</h2>
+            <p class="mt-2 text-sm text-slate-400">Your feedback helps us improve. Share your thoughts and we'll make your next visit even better.</p>
+          </div>
+
+          <textarea id="negativeFeedback" rows="5" placeholder="Tell us about your experience so we can improve..." class="w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+
+          <button onclick="submitNegative()" class="w-full rounded-2xl bg-amber-500 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-amber-400">Send feedback</button>
+          <p id="negativeMsgResult" class="hidden rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-center text-sm text-emerald-300">Thanks! Your feedback has been recorded.</p>
+          <button onclick="goBack()" class="w-full text-sm text-slate-500 transition hover:text-slate-300">← Change my rating</button>
+        </div>
+
+        <div id="screen-tags" class="hidden fade-up space-y-4">
+          <div class="text-center">
+            <div class="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-amber-500/10 text-xl">✨</div>
+            <h2 class="text-xl font-semibold text-white">What stood out?</h2>
+            <p class="mt-2 text-sm text-slate-400">Select what made your visit special to create a personalized review.</p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <button class="tag-pill rounded-2xl border border-white/10 bg-white/5 px-3 py-3 text-left transition" data-tag="food" onclick="toggleTag('food')">
+              <span class="mb-1 block text-lg">🍔</span>
+              <span class="text-sm font-medium text-slate-200">Amazing food</span>
+            </button>
+            <button class="tag-pill rounded-2xl border border-white/10 bg-white/5 px-3 py-3 text-left transition" data-tag="ambiance" onclick="toggleTag('ambiance')">
+              <span class="mb-1 block text-lg">🎵</span>
+              <span class="text-sm font-medium text-slate-200">Great ambiance</span>
+            </button>
+            <button class="tag-pill rounded-2xl border border-white/10 bg-white/5 px-3 py-3 text-left transition" data-tag="service" onclick="toggleTag('service')">
+              <span class="mb-1 block text-lg">🤝</span>
+              <span class="text-sm font-medium text-slate-200">Excellent service</span>
+            </button>
+            <button class="tag-pill rounded-2xl border border-white/10 bg-white/5 px-3 py-3 text-left transition" data-tag="recommend" onclick="toggleTag('recommend')">
+              <span class="mb-1 block text-lg">👍</span>
+              <span class="text-sm font-medium text-slate-200">Highly recommend</span>
+            </button>
+          </div>
+
+          <button id="generateBtn" onclick="generateReview()" disabled class="w-full rounded-2xl bg-amber-500 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-40">Generate My Review →</button>
+          <button onclick="goBack()" class="w-full text-sm text-slate-500 transition hover:text-slate-300">← Change my rating</button>
+        </div>
+
+        <div id="screen-review" class="hidden fade-up space-y-4">
+          <div class="text-center">
+            <div class="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-500/10 text-xl">✍️</div>
+            <h2 class="text-xl font-semibold text-white">Your review is ready</h2>
+            <p class="mt-2 text-sm text-slate-400">Select a suggestion or write your own review for L'ENCORE.</p>
+          </div>
+
+          <div id="suggestionsArea" class="space-y-2"></div>
+
+          <button onclick="toggleCustom()" class="flex w-full items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-amber-400 transition hover:bg-white/10">
+            <span>✎</span>
+            <span id="customToggleText">Write my own review instead</span>
+          </button>
+
+          <div id="customReviewArea" class="hidden">
+            <textarea id="customReviewInput" rows="5" placeholder="Write your review for L'ENCORE here..." class="w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500" oninput="onCustomInput()"></textarea>
+          </div>
+
+          <blockquote id="reviewBox" class="rounded-2xl border border-amber-500/20 bg-slate-900/80 px-4 py-4 text-sm leading-relaxed text-slate-300">
+            <span id="reviewText">Select a suggestion above or write your own...</span>
+          </blockquote>
+
+          <button onclick="regenerateSuggestions()" class="flex w-full items-center justify-center gap-2 rounded-2xl bg-slate-800 px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-700">
+            <span>↻</span>
+            <span>Shuffle suggestions</span>
+          </button>
+
+          <button id="copyPostBtn" onclick="copyAndPost()" disabled class="flex w-full items-center justify-center gap-2 rounded-2xl bg-amber-500 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-40">
+            <span>📋</span>
+            <span id="copyPostBtnText">Copy Review & Post on Google</span>
+          </button>
+          <p class="text-center text-xs text-slate-600">We'll copy your review and open Google Maps so you can post it for L'ENCORE.</p>
+          <button onclick="goBack()" class="w-full text-sm text-slate-500 transition hover:text-slate-300">← Change my rating</button>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const GOOGLE_URL = 'https://search.google.com/local/writereview?placeid=ChIJAfMi-ir9mzkR5XhnYVlMqdI&source=g.page.m.ia._&laa=nmx-review-solicitation-ia2';
+      const REVIEW_DATA = {
+        food: [
+          'The food at L\'ENCORE was absolutely delicious! Every dish was beautifully presented and bursting with flavor 🍽️',
+          'Amazing culinary experience! The menu offers a wonderful variety and each item tastes fresh and authentic.',
+          'Best dining experience in Ahmedabad! The food quality is exceptional and the portions are generous ⭐'
+        ],
+        ambiance: [
+          'The ambiance at L\'ENCORE is simply stunning! Perfect for a romantic dinner or celebration with friends 🎵',
+          'Loved the vibe and atmosphere! Great music, elegant decor, and a really comfortable setting.',
+          'Such a cozy and inviting place! The ambiance makes every visit feel special and memorable ✨'
+        ],
+        service: [
+          'The staff at L\'ENCORE are incredibly warm and attentive! They made us feel so welcome from the moment we walked in 🤝',
+          'Excellent service! Our server was friendly, knowledgeable about the menu, and very prompt.',
+          'The team here truly cares about your experience. Professional, courteous, and always smiling! 💫'
+        ],
+        recommend: [
+          'I would highly recommend L\'ENCORE to anyone looking for an outstanding dining experience in Ahmedabad! 🌟',
+          'This has become my go-to restaurant! Absolutely love everything about it and always bring friends here.',
+          'A must-visit restaurant in Ahmedabad! The food, service, and ambiance all deserve five stars ⭐'
+        ]
+      };
+
+      let selectedTags = [];
+      let currentReview = '';
+      let shownSuggestions = [];
+      let customMode = false;
+
+      function show(id) {
+        ['screen-rating', 'screen-negative', 'screen-tags', 'screen-review'].forEach((screen) => {
+          const el = document.getElementById(screen);
+          if (el) el.classList.add('hidden');
+        });
+
+        const target = document.getElementById(id);
+        if (target) {
+          target.classList.remove('hidden', 'fade-up');
+          void target.offsetWidth;
+          target.classList.add('fade-up');
+        }
+      }
+
+      function handleStar(n) {
+        highlightStars(n);
+        setTimeout(() => {
+          if (n <= 3) {
+            show('screen-negative');
+          } else {
+            show('screen-tags');
+          }
+        }, 220);
+      }
+
+      function highlightStars(n) {
+        document.querySelectorAll('[data-star]').forEach((button) => {
+          const value = Number(button.dataset.star);
+          button.classList.toggle('text-amber-400', value <= n);
+          button.classList.toggle('text-slate-700', value > n);
+        });
+      }
+
+      function resetStars() {
+        document.querySelectorAll('[data-star]').forEach((button) => {
+          button.classList.remove('text-amber-400');
+          button.classList.add('text-slate-700');
+        });
+      }
+
+      function submitNegative() {
+        const feedback = document.getElementById('negativeFeedback').value.trim();
+        if (!feedback) {
+          document.getElementById('negativeFeedback').focus();
+          return;
+        }
+
+        const subject = encodeURIComponent('Customer Feedback — L\'ENCORE Ahmedabad');
+        const body = encodeURIComponent(feedback);
+        const mailtoUrl = `mailto:?subject=${subject}&body=${body}`;
+        window.open(mailtoUrl, '_blank', 'noopener');
+
+        document.getElementById('negativeMsgResult').classList.remove('hidden');
+        document.getElementById('negativeFeedback').disabled = true;
+      }
+
+      function toggleTag(tag) {
+        if (selectedTags.includes(tag)) {
+          selectedTags = selectedTags.filter((item) => item !== tag);
+        } else if (selectedTags.length < 4) {
+          selectedTags.push(tag);
+        }
+
+        document.querySelectorAll('[data-tag]').forEach((button) => {
+          button.classList.toggle('active', selectedTags.includes(button.dataset.tag));
+        });
+
+        updateGenerateButton();
+      }
+
+      function updateGenerateButton() {
+        const btn = document.getElementById('generateBtn');
+        btn.disabled = selectedTags.length === 0;
+      }
+
+      function generateReview() {
+        if (!selectedTags.length) return;
+        renderSuggestions();
+        show('screen-review');
+      }
+
+      function renderSuggestions() {
+        const pool = [];
+        selectedTags.forEach((tag) => {
+          (REVIEW_DATA[tag] || []).forEach((entry) => pool.push(entry));
+        });
+
+        if (!pool.length) return;
+
+        const shuffled = [...pool].sort(() => Math.random() - 0.5).slice(0, 3);
+        shownSuggestions = shuffled;
+
+        const suggestionsArea = document.getElementById('suggestionsArea');
+        suggestionsArea.innerHTML = '';
+
+        shownSuggestions.forEach((suggestion) => {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-left text-sm text-slate-300 transition hover:bg-white/10';
+          button.textContent = suggestion;
+          button.onclick = () => selectSuggestion(suggestion);
+          suggestionsArea.appendChild(button);
+        });
+
+        currentReview = shownSuggestions[0] || '';
+        updateReviewBox();
+        document.getElementById('copyPostBtn').disabled = !currentReview;
+      }
+
+      function selectSuggestion(text) {
+        currentReview = text;
+        updateReviewBox();
+        document.getElementById('copyPostBtn').disabled = !currentReview;
+      }
+
+      function toggleCustom() {
+        customMode = !customMode;
+        const area = document.getElementById('customReviewArea');
+        const toggleText = document.getElementById('customToggleText');
+        area.classList.toggle('hidden', !customMode);
+        toggleText.textContent = customMode ? 'Hide custom review editor' : 'Write my own review instead';
+        if (!customMode) {
+          document.getElementById('customReviewInput').value = '';
+          currentReview = shownSuggestions[0] || '';
+          updateReviewBox();
+          document.getElementById('copyPostBtn').disabled = !currentReview;
+        }
+      }
+
+      function onCustomInput() {
+        currentReview = document.getElementById('customReviewInput').value.trim();
+        updateReviewBox();
+        document.getElementById('copyPostBtn').disabled = !currentReview;
+      }
+
+      function updateReviewBox() {
+        const reviewText = document.getElementById('reviewText');
+        reviewText.textContent = currentReview || 'Select a suggestion above or write your own...';
+      }
+
+      function regenerateSuggestions() {
+        renderSuggestions();
+      }
+
+      async function copyAndPost() {
+        const reviewText = currentReview.trim();
+        if (!reviewText) return;
+
+        try {
+          await navigator.clipboard.writeText(reviewText);
+        } catch (error) {
+          console.warn('Clipboard access was blocked:', error);
+        }
+
+        const customInput = document.getElementById('customReviewInput');
+        const customArea = document.getElementById('customReviewArea');
+        const reviewBox = document.getElementById('reviewText');
+
+        if (customInput) {
+          if (customArea.classList.contains('hidden')) {
+            customMode = true;
+            customArea.classList.remove('hidden');
+            document.getElementById('customToggleText').textContent = 'Hide custom review editor';
+          }
+          customInput.value = reviewText;
+          currentReview = reviewText;
+          updateReviewBox();
+          customInput.focus();
+          customInput.setSelectionRange(customInput.value.length, customInput.value.length);
+          customInput.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+
+        reviewBox.textContent = reviewText;
+        document.getElementById('copyPostBtnText').textContent = 'Copied & ready for Google';
+        window.open(GOOGLE_URL, '_blank', 'noopener');
+      }
+
+      function goBack() {
+        show('screen-rating');
+        resetStars();
+        selectedTags = [];
+        currentReview = '';
+        shownSuggestions = [];
+        customMode = false;
+        document.getElementById('negativeFeedback').value = '';
+        document.getElementById('negativeFeedback').disabled = false;
+        document.getElementById('negativeMsgResult').classList.add('hidden');
+        document.getElementById('customReviewInput').value = '';
+        document.getElementById('customReviewArea').classList.add('hidden');
+        document.getElementById('customToggleText').textContent = 'Write my own review instead';
+        document.getElementById('suggestionsArea').innerHTML = '';
+        document.getElementById('copyPostBtn').disabled = true;
+        document.getElementById('copyPostBtnText').textContent = 'Copy Review & Post on Google';
+        document.querySelectorAll('[data-tag]').forEach((button) => {
+          button.classList.remove('active');
+        });
+        updateGenerateButton();
+        updateReviewBox();
+      }
+
+      document.querySelectorAll('[data-tag]').forEach((button) => {
+        button.classList.toggle('active', selectedTags.includes(button.dataset.tag));
+      });
+      updateGenerateButton();
+      updateReviewBox();
+      show('screen-rating');
+    </script>
+  </body>
+</html>
